@@ -33,6 +33,7 @@ import {
   ProjectListContext,
   ProjectsListContextInterface,
 } from "./contexts/ProjectListContext";
+import {useToken} from "./contexts/TokenContext";
 
 interface FeastUIConfigs {
   tabsRegistry?: FeastTabsRegistryInterface;
@@ -52,8 +53,10 @@ const defaultProjectListPromise = () => {
 
 const FeastUISansProviders = ({
   feastUIConfigs,
+    token
 }: {
   feastUIConfigs?: FeastUIConfigs;
+  token?: string
 }) => {
   const projectListContext: ProjectsListContextInterface =
     feastUIConfigs?.projectListPromise
@@ -62,6 +65,10 @@ const FeastUISansProviders = ({
           isCustom: true,
         }
       : { projectsListPromise: defaultProjectListPromise(), isCustom: false };
+
+  const { setToken } = useToken()
+
+  token && setToken(token)
 
   return (
     <EuiProvider colorMode="light">

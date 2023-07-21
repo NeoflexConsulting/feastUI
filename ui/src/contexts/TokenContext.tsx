@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface ContextProps {
-    tokenAuth: string;
+    tokenAuth?: string;
     setToken(token:string): void;
 }
 

@@ -18,9 +18,6 @@ const defaultQueryClient = new QueryClient();
 
 const FeastUI = ({ reactQueryClient, feastUIConfigs, feastRoutePath, token }: FeastUIProps) => {
   const queryClient = reactQueryClient || defaultQueryClient;
-  const { setToken } = useToken()
-
-  token && setToken(token)
 
   const getBasePath = () => {
     const path = window.location.pathname.split("/").filter(p => p !== "");
@@ -38,7 +35,7 @@ const FeastUI = ({ reactQueryClient, feastUIConfigs, feastRoutePath, token }: Fe
           <QueryParamProvider
             ReactRouterRoute={RouteAdapter as unknown as React.FunctionComponent}
           >
-            <FeastUISansProviders feastUIConfigs={feastUIConfigs} />
+            <FeastUISansProviders token={token} feastUIConfigs={feastUIConfigs} />
           </QueryParamProvider>
         </QueryClientProvider>
       </TokenProvider>

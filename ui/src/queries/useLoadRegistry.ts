@@ -1,10 +1,13 @@
 import { useQuery } from "react-query";
+import {KeycloakInstance} from "keycloak-js";
 import mergedFVTypes, { genericFVType } from "../parsers/mergedFVTypes";
 import parseEntityRelationships, {
   EntityRelation,
 } from "../parsers/parseEntityRelationships";
 import parseIndirectRelationships from "../parsers/parseIndirectRelationships";
 import { feast } from "../protos";
+import {useKeycloak} from "@react-keycloak/ssr";
+import { useToken } from '../contexts/TokenContext';
 
 interface FeatureStoreAllData {
   project: string;
@@ -17,12 +20,17 @@ interface FeatureStoreAllData {
 }
 
 const useLoadRegistry = (url: string) => {
+  const {keycloak} = useKeycloak<KeycloakInstance>()
+  const {tokenAuth} = useToken()
+  const token = keycloak?.token || tokenAuth;
   return useQuery(
     `registry:${url}`,
     () => {
       return fetch(url, {
+        credentials: "omit",
         headers: {
           "Content-Type": "application/json",
+          'Authorization': 'Bearer ' + token,
         },
       })
         .then((res) => {

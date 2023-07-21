@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { QueryParamProvider } from "use-query-params";
 import RouteAdapter from "./hacks/RouteAdapter";
 import FeastUISansProviders, { FeastUIConfigs } from "./FeastUISansProviders";
-import {TokenProvider, useToken} from './contexts/TokenContext';
+import {TokenProvider} from './contexts/TokenContext';
 
 interface FeastUIProps {
   reactQueryClient?: QueryClient;
